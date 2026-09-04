@@ -75,4 +75,233 @@
             <label class="text-xs font-semibold uppercase tracking-wider text-stone-500">Scaled Ingredients</label>
             <button id="copyScaledBtn" class="text-xs font-semibold text-orange-600 hover:underline">📋 Copy</button>
           </div>
-          <div id="outputContainer" class="w-full
+          <div id="outputContainer" class="w-full h-[185px] p-3 text-sm bg-orange-50/40 border border-orange-200 rounded-xl font-mono overflow-y-auto whitespace-pre-wrap text-stone-800">Scaled ingredients will display here...</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="converterSection" class="hidden bg-white rounded-2xl shadow-sm border border-stone-200 p-5 sm:p-6 mb-8">
+      <h2 class="text-base font-bold text-stone-900 mb-4">Volume-to-Weight Ingredient Calculator</h2>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+        <div>
+          <label class="block text-xs font-medium text-stone-600 mb-1">Ingredient</label>
+          <select id="ingredientSelect" class="w-full bg-stone-50 border border-stone-300 rounded-lg p-2 text-sm text-stone-800">
+            <option value="120">All-Purpose Flour (1 cup = 120g)</option>
+            <option value="200">Granulated Sugar (1 cup = 200g)</option>
+            <option value="220">Brown Sugar, packed (1 cup = 220g)</option>
+            <option value="227">Butter (1 cup = 227g)</option>
+            <option value="240">Milk / Water (1 cup = 240g)</option>
+            <option value="90">Rolled Oats (1 cup = 90g)</option>
+            <option value="100">Cocoa Powder (1 cup = 100g)</option>
+            <option value="340">Honey (1 cup = 340g)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-stone-600 mb-1">Amount</label>
+          <input type="number" id="convertAmount" value="1" step="0.25" min="0" class="w-full bg-stone-50 border border-stone-300 rounded-lg p-2 text-sm font-semibold" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-stone-600 mb-1">From Unit</label>
+          <select id="convertUnit" class="w-full bg-stone-50 border border-stone-300 rounded-lg p-2 text-sm text-stone-800">
+            <option value="cup">Cups (US)</option>
+            <option value="tbsp">Tablespoons (tbsp)</option>
+            <option value="tsp">Teaspoons (tsp)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="p-4 bg-orange-50 border border-orange-200 rounded-xl text-center">
+        <span class="text-xs text-stone-500 uppercase tracking-wide font-semibold block mb-1">Calculated Weight</span>
+        <span id="convertResult" class="text-2xl font-black text-orange-700">120 grams (4.23 oz)</span>
+      </div>
+    </div>
+
+    <div class="bg-gradient-to-r from-stone-900 to-stone-800 text-white rounded-2xl p-5 mb-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        <div class="flex items-center space-x-2">
+          <span class="text-lg">⚖️</span>
+          <h3 class="font-bold text-sm">Bake with Precision</h3>
+        </div>
+        <p class="text-stone-300 text-xs mt-1">Measuring baking ingredients by weight rather than volume eliminates kitchen inconsistencies.</p>
+      </div>
+      <a href="https://www.amazon.com/s?k=digital+kitchen+scale" target="_blank" rel="noopener sponsored" class="bg-orange-500 hover:bg-orange-600 text-white text-xs font-semibold px-4 py-2.5 rounded-lg whitespace-nowrap transition-colors shadow-xs">
+        Top Rated Kitchen Scales →
+      </a>
+    </div>
+
+    <section class="max-w-3xl mx-auto space-y-6 text-stone-700 text-sm leading-relaxed">
+      <div class="border-t border-stone-200 pt-8">
+        <h2 class="text-xl font-bold text-stone-900 mb-3">Understanding Baking Densities</h2>
+        <p>
+          Unlike liquids, dry baking ingredients cannot be converted using a universal metric ratio. A cup of packed brown sugar weighs almost double a cup of sifted all-purpose flour. Using weight (grams) ensures predictable baking results every time.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-stone-200 bg-white py-6 mt-12 text-center text-xs text-stone-500">
+    <p>© <span id="year"></span> RecipeScale. Instant, client-side cooking tools.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Tab Navigation
+    const tabScale = document.getElementById('tabScale');
+    const tabConvert = document.getElementById('tabConvert');
+    const scalerSection = document.getElementById('scalerSection');
+    const converterSection = document.getElementById('converterSection');
+
+    tabScale.addEventListener('click', () => {
+      scalerSection.classList.remove('hidden');
+      converterSection.classList.add('hidden');
+      tabScale.className = "px-5 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-white shadow-xs text-stone-900 transition-all";
+      tabConvert.className = "px-5 py-2 text-xs sm:text-sm font-semibold rounded-lg text-stone-600 hover:text-stone-900 transition-all";
+    });
+
+    tabConvert.addEventListener('click', () => {
+      converterSection.classList.remove('hidden');
+      scalerSection.classList.add('hidden');
+      tabConvert.className = "px-5 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-white shadow-xs text-stone-900 transition-all";
+      tabScale.className = "px-5 py-2 text-xs sm:text-sm font-semibold rounded-lg text-stone-600 hover:text-stone-900 transition-all";
+    });
+
+    // Fraction & Number Parser
+    const unicodeFractions = {
+      '½': 0.5, '⅓': 1/3, '⅔': 2/3, '¼': 0.25, '¾': 0.75,
+      '⅕': 0.2, '⅖': 0.4, '⅗': 0.6, '⅘': 0.8,
+      '⅙': 1/6, '⅚': 5/6, '⅛': 0.125, '⅜': 0.375, '⅝': 0.625, '⅞': 0.875
+    };
+
+    function parseAmount(str) {
+      str = str.trim();
+      for (const [char, val] of Object.entries(unicodeFractions)) {
+        if (str.includes(char)) {
+          const rest = str.replace(char, '').trim();
+          const base = rest ? parseFloat(rest) : 0;
+          return base + val;
+        }
+      }
+      if (str.includes(' ')) {
+        const parts = str.split(/\s+/);
+        if (parts.length === 2 && parts[1].includes('/')) {
+          const [n, d] = parts[1].split('/');
+          return parseFloat(parts[0]) + (parseFloat(n) / parseFloat(d));
+        }
+      }
+      if (str.includes('/')) {
+        const [n, d] = str.split('/');
+        return parseFloat(n) / parseFloat(d);
+      }
+      return parseFloat(str);
+    }
+
+    function formatScaled(val) {
+      if (isNaN(val) || val <= 0) return '';
+      const tolerance = 0.05;
+      const whole = Math.floor(val);
+      const remainder = val - whole;
+
+      const commonFractions = [
+        { frac: '1/8', val: 0.125 },
+        { frac: '1/4', val: 0.25 },
+        { frac: '1/3', val: 0.333 },
+        { frac: '1/2', val: 0.5 },
+        { frac: '2/3', val: 0.666 },
+        { frac: '3/4', val: 0.75 }
+      ];
+
+      for (const f of commonFractions) {
+        if (Math.abs(remainder - f.val) < tolerance) {
+          return whole > 0 ? `${whole} ${f.frac}` : f.frac;
+        }
+      }
+
+      return (Math.round(val * 100) / 100).toString();
+    }
+
+    const origServings = document.getElementById('origServings');
+    const targetServings = document.getElementById('targetServings');
+    const inputIngredients = document.getElementById('inputIngredients');
+    const outputContainer = document.getElementById('outputContainer');
+    const scaleBtn = document.getElementById('scaleBtn');
+    const sampleBtn = document.getElementById('sampleBtn');
+    const copyScaledBtn = document.getElementById('copyScaledBtn');
+
+    function performScale() {
+      const orig = parseFloat(origServings.value);
+      const target = parseFloat(targetServings.value);
+      if (!orig || !target || orig <= 0 || target <= 0) return;
+
+      const multiplier = target / orig;
+      const lines = inputIngredients.value.split('\n');
+
+      const scaledLines = lines.map(line => {
+        if (!line.trim()) return '';
+
+        const regex = /^(\s*[\d\.\/\s½⅓⅔¼¾⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞]+)/;
+        const match = line.match(regex);
+
+        if (match && match[0].trim()) {
+          const rawNum = match[0].trim();
+          const parsed = parseAmount(rawNum);
+
+          if (!isNaN(parsed) && parsed > 0) {
+            const scaled = formatScaled(parsed * multiplier);
+            return line.replace(rawNum, scaled);
+          }
+        }
+        return line;
+      });
+
+      outputContainer.textContent = scaledLines.join('\n');
+    }
+
+    scaleBtn.addEventListener('click', performScale);
+    origServings.addEventListener('input', performScale);
+    targetServings.addEventListener('input', performScale);
+    inputIngredients.addEventListener('input', performScale);
+
+    sampleBtn.addEventListener('click', () => {
+      inputIngredients.value = "2 cups all-purpose flour\n1 1/2 tsp baking powder\n1/2 cup granulated sugar\n2 large eggs\n1/4 cup unsalted butter";
+      origServings.value = 4;
+      targetServings.value = 6;
+      performScale();
+    });
+
+    copyScaledBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(outputContainer.textContent).then(() => {
+        copyScaledBtn.textContent = '✅ Copied!';
+        setTimeout(() => copyScaledBtn.textContent = '📋 Copy', 2000);
+      });
+    });
+
+    // Cups to Grams Converter Logic
+    const ingredientSelect = document.getElementById('ingredientSelect');
+    const convertAmount = document.getElementById('convertAmount');
+    const convertUnit = document.getElementById('convertUnit');
+    const convertResult = document.getElementById('convertResult');
+
+    function calculateGrams() {
+      const densityPerCup = parseFloat(ingredientSelect.value);
+      const amount = parseFloat(convertAmount.value) || 0;
+      const unit = convertUnit.value;
+
+      let cupsEquivalent = amount;
+      if (unit === 'tbsp') cupsEquivalent = amount / 16;
+      if (unit === 'tsp') cupsEquivalent = amount / 48;
+
+      const totalGrams = Math.round(cupsEquivalent * densityPerCup * 10) / 10;
+      const totalOz = Math.round((totalGrams * 0.035274) * 100) / 100;
+
+      convertResult.textContent = `${totalGrams} grams (${totalOz} oz)`;
+    }
+
+    ingredientSelect.addEventListener('change', calculateGrams);
+    convertAmount.addEventListener('input', calculateGrams);
+    convertUnit.addEventListener('change', calculateGrams);
+    calculateGrams();
+  </script>
+</body>
+</html>
