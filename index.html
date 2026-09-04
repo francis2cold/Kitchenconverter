@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Recipe Scaler & Kitchen Converter | Free Cooking Calculator</title>
-  <meta name="description" content="Instantly scale recipe ingredients up or down. Convert cups to grams accurately based on ingredient densities." />
+  <title>Smart Recipe Scaler & Ingredient Converter | Culinary Calculator</title>
+  <meta name="description" content="Intelligently scale recipes with smart ingredient recognition. Adjust baking and cooking portions with culinary rules for leaveners, spices, and staples." />
   
-  <meta property="og:title" content="RecipeScale | Free Recipe Scaler & Measurement Converter" />
-  <meta property="og:description" content="Scale ingredients and convert baking measurements in seconds." />
+  <meta property="og:title" content="RecipeScale | Smart Ingredient Recognition & Scaler" />
+  <meta property="og:description" content="Intelligent recipe portion adjuster that understands ingredients and kitchen math." />
   <meta property="og:type" content="website" />
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23ea580c'/><text y='70' x='18' font-size='60'>🥣</text></svg>">
@@ -15,21 +15,21 @@
 </head>
 <body class="bg-amber-50/40 text-stone-800 font-sans min-h-screen flex flex-col justify-between">
 
-  <header class="border-b border-stone-200 bg-white">
+  <header class="border-b border-stone-200 bg-white shadow-xs">
     <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
       <div class="flex items-center space-x-2">
         <span class="text-2xl">🥣</span>
         <span class="font-bold text-xl tracking-tight text-stone-900">Recipe<span class="text-orange-600">Scale</span></span>
       </div>
-      <span class="text-xs font-semibold px-2.5 py-1 bg-orange-50 text-orange-700 rounded-full border border-orange-200">Kitchen Utility</span>
+      <span class="text-xs font-semibold px-2.5 py-1 bg-orange-50 text-orange-700 rounded-full border border-orange-200">Smart Culinary Engine</span>
     </div>
   </header>
 
   <main class="max-w-4xl mx-auto px-4 py-8 w-full flex-grow">
     <div class="text-center mb-8">
-      <h1 class="text-3xl sm:text-4xl font-extrabold text-stone-900 tracking-tight">Recipe Scaler & Ingredient Converter</h1>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-stone-900 tracking-tight">Smart Recipe Portion Scaler</h1>
       <p class="mt-2 text-stone-600 max-w-xl mx-auto text-sm sm:text-base">
-        Scale portion sizes accurately and convert volume measurements (cups) to weight (grams).
+        Paste any recipe. The culinary parser recognizes spices, eggs, leaveners, and bulk ingredients to adjust portions accurately.
       </p>
     </div>
 
@@ -52,11 +52,11 @@
         </div>
         <div>
           <label class="block text-xs font-medium text-stone-600 mb-1">Target Servings</label>
-          <input type="number" id="targetServings" value="6" min="1" class="w-full bg-stone-50 border border-stone-300 rounded-lg p-2.5 text-stone-900 text-sm font-semibold text-center focus:ring-2 focus:ring-orange-500 focus:outline-hidden" />
+          <input type="number" id="targetServings" value="8" min="1" class="w-full bg-stone-50 border border-stone-300 rounded-lg p-2.5 text-stone-900 text-sm font-semibold text-center focus:ring-2 focus:ring-orange-500 focus:outline-hidden" />
         </div>
         <div class="col-span-2 flex items-end">
           <button id="scaleBtn" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors shadow-xs">
-            Scale Recipe
+            Calculate Smart Scale
           </button>
         </div>
       </div>
@@ -64,19 +64,26 @@
       <div class="grid sm:grid-cols-2 gap-6">
         <div>
           <div class="flex items-center justify-between mb-2">
-            <label class="text-xs font-semibold uppercase tracking-wider text-stone-500">Paste Original Ingredients</label>
-            <button id="sampleBtn" class="text-xs text-orange-600 hover:underline">Load Example</button>
+            <label class="text-xs font-semibold uppercase tracking-wider text-stone-500">Paste Recipe Ingredients</label>
+            <button id="sampleBtn" class="text-xs font-medium text-orange-600 hover:underline">Load Test Recipe</button>
           </div>
-          <textarea id="inputIngredients" rows="8" class="w-full p-3 text-sm bg-stone-50 border border-stone-300 rounded-xl font-mono focus:ring-2 focus:ring-orange-500 focus:outline-hidden" placeholder="2 cups all-purpose flour&#10;1 1/2 tsp baking powder&#10;1/2 cup granulated sugar&#10;2 large eggs&#10;1/4 cup unsalted butter"></textarea>
+          <textarea id="inputIngredients" rows="10" class="w-full p-3 text-sm bg-stone-50 border border-stone-300 rounded-xl font-mono focus:ring-2 focus:ring-orange-500 focus:outline-hidden" placeholder="2 cups all-purpose flour&#10;1 tsp table salt&#10;1 1/2 tsp baking powder&#10;1/2 cup granulated sugar&#10;2 large eggs&#10;1/4 cup unsalted butter"></textarea>
         </div>
 
         <div>
           <div class="flex items-center justify-between mb-2">
-            <label class="text-xs font-semibold uppercase tracking-wider text-stone-500">Scaled Ingredients</label>
+            <label class="text-xs font-semibold uppercase tracking-wider text-stone-500">Scaled Ingredients (Parsed)</label>
             <button id="copyScaledBtn" class="text-xs font-semibold text-orange-600 hover:underline">📋 Copy</button>
           </div>
-          <div id="outputContainer" class="w-full h-[185px] p-3 text-sm bg-orange-50/40 border border-orange-200 rounded-xl font-mono overflow-y-auto whitespace-pre-wrap text-stone-800">Scaled ingredients will display here...</div>
+          <div id="outputContainer" class="w-full h-[225px] p-3 text-sm bg-orange-50/40 border border-orange-200 rounded-xl font-mono overflow-y-auto whitespace-pre-wrap text-stone-800">Scaled results will display here...</div>
         </div>
+      </div>
+
+      <div class="mt-4 pt-4 border-t border-stone-100 flex flex-wrap items-center gap-4 text-xs text-stone-500">
+        <span class="font-semibold text-stone-700">Recognition Rules:</span>
+        <span class="flex items-center"><strong class="text-stone-800 mr-1">Staples</strong> (Flour, Sugar, Butter) = Exact ratio</span>
+        <span class="flex items-center"><strong class="text-amber-700 mr-1">Potent Items</strong> (Salt, Spices, Leaveners) = Culinary-dampened</span>
+        <span class="flex items-center"><strong class="text-orange-700 mr-1">Eggs</strong> = Kitchen-rounded</span>
       </div>
     </div>
 
@@ -132,16 +139,17 @@
 
     <section class="max-w-3xl mx-auto space-y-6 text-stone-700 text-sm leading-relaxed">
       <div class="border-t border-stone-200 pt-8">
-        <h2 class="text-xl font-bold text-stone-900 mb-3">Understanding Baking Densities</h2>
+        <h2 class="text-xl font-bold text-stone-900 mb-3">Why Smart Ingredient Recognition Matters</h2>
         <p>
-          Unlike liquids, dry baking ingredients cannot be converted using a universal metric ratio. A cup of packed brown sugar weighs almost double a cup of sifted all-purpose flour. Using weight (grams) ensures predictable baking results every time.
+          Standard math multipliers fail in real cooking. Doubling a recipe does not mean doubling the salt, chili powder, or leavener—doing so creates overly salty, bitter, or collapsing cakes. 
+          This engine detects sensitive spices and applies culinary dampening ratios while keeping your flour, sugar, and liquids proportional.
         </p>
       </div>
     </section>
   </main>
 
   <footer class="border-t border-stone-200 bg-white py-6 mt-12 text-center text-xs text-stone-500">
-    <p>© <span id="year"></span> RecipeScale. Instant, client-side cooking tools.</p>
+    <p>© <span id="year"></span> RecipeScale. Smart culinary measurement tools.</p>
   </footer>
 
   <script>
@@ -167,14 +175,14 @@
       tabScale.className = "px-5 py-2 text-xs sm:text-sm font-semibold rounded-lg text-stone-600 hover:text-stone-900 transition-all";
     });
 
-    // Fraction & Number Parser
+    // Unicode & Mixed Fraction Dictionary
     const unicodeFractions = {
       '½': 0.5, '⅓': 1/3, '⅔': 2/3, '¼': 0.25, '¾': 0.75,
       '⅕': 0.2, '⅖': 0.4, '⅗': 0.6, '⅘': 0.8,
       '⅙': 1/6, '⅚': 5/6, '⅛': 0.125, '⅜': 0.375, '⅝': 0.625, '⅞': 0.875
     };
 
-    function parseAmount(str) {
+    function parseAmountString(str) {
       str = str.trim();
       for (const [char, val] of Object.entries(unicodeFractions)) {
         if (str.includes(char)) {
@@ -197,13 +205,14 @@
       return parseFloat(str);
     }
 
-    function formatScaled(val) {
+    // Convert decimal numbers back to clean cooking fractions
+    function formatKitchenFraction(val) {
       if (isNaN(val) || val <= 0) return '';
-      const tolerance = 0.05;
+      const tolerance = 0.06;
       const whole = Math.floor(val);
       const remainder = val - whole;
 
-      const commonFractions = [
+      const fractions = [
         { frac: '1/8', val: 0.125 },
         { frac: '1/4', val: 0.25 },
         { frac: '1/3', val: 0.333 },
@@ -212,13 +221,45 @@
         { frac: '3/4', val: 0.75 }
       ];
 
-      for (const f of commonFractions) {
+      for (const f of fractions) {
         if (Math.abs(remainder - f.val) < tolerance) {
           return whole > 0 ? `${whole} ${f.frac}` : f.frac;
         }
       }
 
-      return (Math.round(val * 100) / 100).toString();
+      if (remainder < tolerance) return whole.toString();
+      if (Math.abs(remainder - 1) < tolerance) return (whole + 1).toString();
+
+      return (Math.round(val * 10) / 10).toString();
+    }
+
+    // INGREDIENT CLASSIFIER & CULINARY ENGINE
+    const POTENT_SPICES = [
+      'salt', 'pepper', 'cayenne', 'chili', 'paprika', 'clove', 'nutmeg', 
+      'cinnamon', 'cumin', 'curry', 'baking powder', 'baking soda', 'yeast'
+    ];
+    const EGGS = ['egg', 'eggs', 'yolk', 'egg white'];
+
+    function getAdjustedMultiplier(ingredientText, baseMultiplier) {
+      const lower = ingredientText.toLowerCase();
+
+      // Rule 1: Potent Spices & Leaveners scale at dampened power
+      // e.g. If doubling (2x), spice scales to 1.45x rather than a full 2x
+      if (POTENT_SPICES.some(spice => lower.includes(spice))) {
+        if (baseMultiplier > 1) {
+          return Math.pow(baseMultiplier, 0.75); // dampened curve
+        } else {
+          return Math.pow(baseMultiplier, 0.85); // conservative reduction
+        }
+      }
+
+      // Rule 2: Discrete Eggs round cleanly
+      if (EGGS.some(e => lower.includes(e))) {
+        return baseMultiplier;
+      }
+
+      // Rule 3: Standard staples (flour, liquids, sugar) scale 1:1
+      return baseMultiplier;
     }
 
     const origServings = document.getElementById('origServings');
@@ -229,27 +270,44 @@
     const sampleBtn = document.getElementById('sampleBtn');
     const copyScaledBtn = document.getElementById('copyScaledBtn');
 
-    function performScale() {
+    function performSmartScale() {
       const orig = parseFloat(origServings.value);
       const target = parseFloat(targetServings.value);
       if (!orig || !target || orig <= 0 || target <= 0) return;
 
-      const multiplier = target / orig;
+      const baseMultiplier = target / orig;
       const lines = inputIngredients.value.split('\n');
 
       const scaledLines = lines.map(line => {
         if (!line.trim()) return '';
 
+        // Match leading quantities: handles mixed fractions, decimals, unicode fractions
         const regex = /^(\s*[\d\.\/\s½⅓⅔¼¾⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞]+)/;
         const match = line.match(regex);
 
         if (match && match[0].trim()) {
           const rawNum = match[0].trim();
-          const parsed = parseAmount(rawNum);
+          const parsed = parseAmountString(rawNum);
 
           if (!isNaN(parsed) && parsed > 0) {
-            const scaled = formatScaled(parsed * multiplier);
-            return line.replace(rawNum, scaled);
+            const ingredientPart = line.replace(match[0], '').trim();
+            const adjustedMultiplier = getAdjustedMultiplier(ingredientPart, baseMultiplier);
+            let scaledVal = parsed * adjustedMultiplier;
+
+            // Egg rounding logic
+            if (EGGS.some(e => ingredientPart.toLowerCase().includes(e))) {
+              scaledVal = Math.max(1, Math.round(scaledVal));
+            }
+
+            const formattedAmount = formatKitchenFraction(scaledVal);
+            
+            // Add indicator for dampened spices
+            const isPotent = POTENT_SPICES.some(s => ingredientPart.toLowerCase().includes(s));
+            const note = (isPotent && Math.abs(baseMultiplier - adjustedMultiplier) > 0.15) 
+              ? ' (culinary adjusted)' 
+              : '';
+
+            return line.replace(rawNum, formattedAmount) + note;
           }
         }
         return line;
@@ -258,16 +316,16 @@
       outputContainer.textContent = scaledLines.join('\n');
     }
 
-    scaleBtn.addEventListener('click', performScale);
-    origServings.addEventListener('input', performScale);
-    targetServings.addEventListener('input', performScale);
-    inputIngredients.addEventListener('input', performScale);
+    scaleBtn.addEventListener('click', performSmartScale);
+    origServings.addEventListener('input', performSmartScale);
+    targetServings.addEventListener('input', performSmartScale);
+    inputIngredients.addEventListener('input', performSmartScale);
 
     sampleBtn.addEventListener('click', () => {
-      inputIngredients.value = "2 cups all-purpose flour\n1 1/2 tsp baking powder\n1/2 cup granulated sugar\n2 large eggs\n1/4 cup unsalted butter";
+      inputIngredients.value = "2 cups all-purpose flour\n1 tsp table salt\n1 1/2 tsp baking powder\n1/2 cup granulated sugar\n2 large eggs\n1/4 cup unsalted butter";
       origServings.value = 4;
-      targetServings.value = 6;
-      performScale();
+      targetServings.value = 8;
+      performSmartScale();
     });
 
     copyScaledBtn.addEventListener('click', () => {
